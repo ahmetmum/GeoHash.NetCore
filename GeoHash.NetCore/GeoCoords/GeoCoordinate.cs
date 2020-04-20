@@ -14,7 +14,7 @@
 
         public override string ToString()
         {
-            return $"{Longitude} {Latitude}".Replace(",", ".").Replace(" ", ",");
+            return $"{Latitude} {Longitude}".Replace(",", ".").Replace(" ", ",");
         }
 
         public override bool Equals(object other)
