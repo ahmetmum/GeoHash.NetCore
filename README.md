@@ -4,7 +4,7 @@
 Notice: Extract from to https://github.com/alexframe/GeoHash.Net project.
 
 ## Getting Started
-Install via GeoHash.NetCore package on Nuget.
+Install via [`GeoHash.NetCore`][1] package on Nuget.
 
 `Install-Package GeoHash.NetCore`
 
@@ -12,3 +12,5 @@ Install via GeoHash.NetCore package on Nuget.
 * Lat/Lon to GeoHashed string
 * GeoHashed string to Lat/Lon
 * Single or multiple matches
+
+  [1]: https://www.nuget.org/packages/GeoHash.Net
