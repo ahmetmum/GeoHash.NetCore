@@ -13,4 +13,4 @@ Install via [`GeoHash.NetCore`][1] package on Nuget.
 * GeoHashed string to Lat/Lon
 * Single or multiple matches
 
-  [1]: https://www.nuget.org/packages/GeoHash.Net
+  [1]: https://www.nuget.org/packages/GeoHash.NetCore
