@@ -2,12 +2,23 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
+    <Company>Ahmet MUM</Company>
+    <Authors>Ahmet MUM</Authors>
+    <Product>GeoHash for .Net Core</Product>
+    <Description>Lat/Lon to GeoHashed string, GeoHashed string to Lat/Lon, Single or muliple matches</Description>
+    <Copyright>Free</Copyright>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <PackageIcon>geohash.netcore-icon.png</PackageIcon>
   </PropertyGroup>
 
   <ItemGroup>
     <Compile Remove="Properties\**" />
     <EmbeddedResource Remove="Properties\**" />
     <None Remove="Properties\**" />
+    <None Include="..\geohash.netcore-icon.png">
+      <Pack>True</Pack>
+      <PackagePath></PackagePath>
+    </None>
   </ItemGroup>
 
 </Project>
