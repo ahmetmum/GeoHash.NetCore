@@ -1,11 +1,16 @@
 # GeoHash.NetCore
-GeoHash for .Net Core
+.Net Core library for GeoHash
 
 Notice: Extract from to https://github.com/alexframe/GeoHash.Net project.
 
-.Net Core library for GeoHash
+## Getting Started
+Install via [`GeoHash.NetCore`][1] package on Nuget.
+
+`Install-Package GeoHash.NetCore`
 
 ## Capabilities
 * Lat/Lon to GeoHashed string
 * GeoHashed string to Lat/Lon
 * Single or multiple matches
+
+  [1]: https://www.nuget.org/packages/GeoHash.NetCore
