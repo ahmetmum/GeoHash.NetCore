@@ -5,11 +5,19 @@
     <Company>Ahmet MUM</Company>
     <Authors>Ahmet MUM</Authors>
     <Product>GeoHash for .Net Core</Product>
-    <Description>Lat/Lon to GeoHashed string, GeoHashed string to Lat/Lon, Single or muliple matches, GeoHashed to Extent, Polygon</Description>
+    <Description>Lat/Lon to GeoHashed string, GeoHashed string to Lat/Lon, Single or muliple matches</Description>
     <Copyright>Free</Copyright>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <PackageIcon>geohash.netcore-icon.png</PackageIcon>
+    <PackageLicenseFile>LICENSE.txt</PackageLicenseFile>
+    <RepositoryUrl>https://github.com/ahmetmum/GeoHash.NetCore</RepositoryUrl>
+    <RepositoryType>GitHub</RepositoryType>
+    <PackageTags>geohash geohash-library .netcore c# .net</PackageTags>
     <Version>1.1.0</Version>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <WarningLevel>0</WarningLevel>
   </PropertyGroup>
 
   <ItemGroup>
@@ -17,6 +25,10 @@
     <EmbeddedResource Remove="Properties\**" />
     <None Remove="Properties\**" />
     <None Include="..\geohash.netcore-icon.png">
+      <Pack>True</Pack>
+      <PackagePath></PackagePath>
+    </None>
+    <None Include="..\LICENSE.txt">
       <Pack>True</Pack>
       <PackagePath></PackagePath>
     </None>
