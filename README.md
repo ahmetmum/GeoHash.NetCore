@@ -12,5 +12,6 @@ Install via [`GeoHash.NetCore`][1] package on Nuget.
 * Lat/Lon to GeoHashed string
 * GeoHashed string to Lat/Lon
 * Single or multiple matches
+* GeoHashed to Extent, Polygon
 
   [1]: https://www.nuget.org/packages/GeoHash.NetCore
