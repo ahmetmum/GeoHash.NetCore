@@ -5,7 +5,7 @@
     <Company>Ahmet MUM</Company>
     <Authors>Ahmet MUM</Authors>
     <Product>GeoHash for .Net Core</Product>
-    <Description>Lat/Lon to GeoHashed string, GeoHashed string to Lat/Lon, Single or muliple matches</Description>
+    <Description>Lat/Lon to GeoHashed string, GeoHashed string to Lat/Lon, Single or muliple matches, GeoHashed to Extent, Polygon</Description>
     <Copyright>Free</Copyright>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <PackageIcon>geohash.netcore-icon.png</PackageIcon>
