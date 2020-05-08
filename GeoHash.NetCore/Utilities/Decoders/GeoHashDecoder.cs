@@ -1,8 +1,8 @@
-﻿using System;
+﻿using GeoHash.Net.GeoCoords;
+using GeoHash.Net.Utilities.Helpers;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using GeoHash.Net.GeoCoords;
-using GeoHash.Net.Utilities.Helpers;
 
 namespace GeoHash.Net.Utilities.Decoders
 {
@@ -18,20 +18,12 @@ namespace GeoHash.Net.Utilities.Decoders
             return Tuple.Create(decoded.Latitude, decoded.Longitude);
         }
 
-        public IEnumerable<GeoCoordinate> Decode(IEnumerable<string> geoHashes)
-        {
-            return geoHashes.AsParallel().Select(Decode);
-        }
+        public IEnumerable<GeoCoordinate> Decode(IEnumerable<string> geoHashes) => geoHashes.AsParallel().Select(Decode);
 
-        public IEnumerable<KeyValuePair<TKey, GeoCoordinate>> Decode(IEnumerable<KeyValuePair<TKey, string>> geoHashes)
-        {
-            return geoHashes.AsParallel().Select(geoHash => new KeyValuePair<TKey, GeoCoordinate>(geoHash.Key, Decode(geoHash.Value)));
-        }
+        public IEnumerable<GeoExtent> DecodeToExtent(IEnumerable<string> geoHashes) => geoHashes.AsParallel().Select(DecodeToExtent);
 
-        public IDictionary<TKey, GeoCoordinate> Decode(IDictionary<TKey, GeoCoordinate> geoHashes)
-        {
-            var kvp = geoHashes.Cast<KeyValuePair<TKey, string>>();
-            return Decode(kvp).ToDictionary(x => x.Key, x => x.Value);
-        }
+        public IEnumerable<KeyValuePair<TKey, GeoCoordinate>> Decode(IEnumerable<KeyValuePair<TKey, string>> geoHashes) => geoHashes.AsParallel().Select(geoHash => new KeyValuePair<TKey, GeoCoordinate>(geoHash.Key, Decode(geoHash.Value)));
+
+        public IDictionary<TKey, GeoCoordinate> Decode(IDictionary<TKey, GeoCoordinate> geoHashes) => Decode(geoHashes.Cast<KeyValuePair<TKey, string>>()).ToDictionary(x => x.Key, x => x.Value);
     }
 }

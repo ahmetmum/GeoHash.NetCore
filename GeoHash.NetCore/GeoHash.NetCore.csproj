@@ -13,6 +13,7 @@
     <RepositoryUrl>https://github.com/ahmetmum/GeoHash.NetCore</RepositoryUrl>
     <RepositoryType>GitHub</RepositoryType>
     <PackageTags>geohash geohash-library .netcore c# .net</PackageTags>
+    <Version>1.1.0</Version>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">

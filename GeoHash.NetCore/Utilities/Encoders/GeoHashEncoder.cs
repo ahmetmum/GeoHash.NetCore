@@ -12,25 +12,12 @@ namespace GeoHash.Net.Utilities.Encoders
 
         public GeoHashEncoder(int[] bits, char[] base32Chars) : base(bits, base32Chars) { }
 
-        public string Encode(GeoCoordinate geoCoord, GeoHashPrecision precision = GeoHashPrecision.MaximumPrecision)
-        {
-            return Encode(geoCoord.Latitude, geoCoord.Longitude, precision);
-        }
+        public string Encode(GeoCoordinate geoCoord, GeoHashPrecision precision = GeoHashPrecision.MaximumPrecision) => Encode(geoCoord.Latitude, geoCoord.Longitude, precision);
 
-        public IEnumerable<KeyValuePair<TKey, string>> Encode(IEnumerable<KeyValuePair<TKey, GeoCoordinate>> geoCoords, GeoHashPrecision precision = GeoHashPrecision.MaximumPrecision)
-        {
-            return geoCoords.AsParallel().Select(geoCoord => new KeyValuePair<TKey, string>(geoCoord.Key, Encode(geoCoord.Value, precision)));
-        }
+        public IEnumerable<KeyValuePair<TKey, string>> Encode(IEnumerable<KeyValuePair<TKey, GeoCoordinate>> geoCoords, GeoHashPrecision precision = GeoHashPrecision.MaximumPrecision) => geoCoords.AsParallel().Select(geoCoord => new KeyValuePair<TKey, string>(geoCoord.Key, Encode(geoCoord.Value, precision)));
 
-        public IDictionary<TKey, string> Encode(IDictionary<TKey, GeoCoordinate> geoCoords, GeoHashPrecision precision = GeoHashPrecision.MaximumPrecision)
-        {
-            var kvp = geoCoords.Cast<KeyValuePair<TKey, GeoCoordinate>>();
-            return Encode(kvp, precision).ToDictionary(x => x.Key, x => x.Value);
-        }
+        public IDictionary<TKey, string> Encode(IDictionary<TKey, GeoCoordinate> geoCoords, GeoHashPrecision precision = GeoHashPrecision.MaximumPrecision) => Encode(geoCoords.Cast<KeyValuePair<TKey, GeoCoordinate>>(), precision).ToDictionary(x => x.Key, x => x.Value);
 
-        public IEnumerable<string> Encode(IEnumerable<GeoCoordinate> geoCoords, GeoHashPrecision precision = GeoHashPrecision.MaximumPrecision)
-        {
-            return geoCoords.AsParallel().Select(geoCoord => Encode(geoCoord, precision));
-        }
+        public IEnumerable<string> Encode(IEnumerable<GeoCoordinate> geoCoords, GeoHashPrecision precision = GeoHashPrecision.MaximumPrecision) => geoCoords.AsParallel().Select(geoCoord => Encode(geoCoord, precision));
     }
 }
