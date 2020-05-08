@@ -83,6 +83,57 @@ namespace GeoHash.Net.Utilities.Decoders
             return new GeoCoordinate(lat, lng);
         }
 
+        private GeoExtentWithError DecodeExactlyToExtend(string geohash)
+        {
+            double latMin = -90, latMax = 90;
+            double lngMin = -180, lngMax = 180;
+
+            var latErr = 90.0;
+            var lngError = 180.0;
+            var isEven = true;
+            var size = geohash.Length;
+            var bitsSize = _bits.Length;
+            for (var i = 0; i < size; i++)
+            {
+                var cd = _decodeMap[geohash[i]];
+
+                for (var j = 0; j < bitsSize; j++)
+                {
+                    var mask = _bits[j];
+                    if (isEven)
+                    {
+                        lngError /= 2;
+                        if ((cd & mask) != 0)
+                        {
+                            lngMin = (lngMin + lngMax) / 2;
+                        }
+                        else
+                        {
+                            lngMax = (lngMin + lngMax) / 2;
+                        }
+                    }
+                    else
+                    {
+                        latErr /= 2;
+
+                        if ((cd & mask) != 0)
+                        {
+                            latMin = (latMin + latMax) / 2;
+                        }
+                        else
+                        {
+                            latMax = (latMin + latMax) / 2;
+                        }
+                    }
+                    isEven = !isEven;
+                }
+            }
+
+            return new GeoExtentWithError(latMin, lngMin, latMax, lngMax, latErr, lngError);
+        }
+
+        public GeoExtent DecodeToExtent(string geoHash) => new GeoExtent(DecodeExactlyToExtend(geoHash));
+
         private static double GetPrecision(double x, double precision)
         {
             var @base = Math.Pow(10, -precision);

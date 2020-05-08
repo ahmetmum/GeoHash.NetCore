@@ -12,25 +12,13 @@
             Longitude = longitude;
         }
 
-        public override string ToString()
-        {
-            return $"{Latitude} {Longitude}".Replace(",", ".").Replace(" ", ",");
-        }
+        public override string ToString() => $"{Latitude} {Longitude}".Replace(",", ".").Replace(" ", ",");
 
-        public override bool Equals(object other)
-        {
-            return other is GeoCoordinate && Equals((GeoCoordinate)other);
-        }
+        public override bool Equals(object other) => other is GeoCoordinate && Equals((GeoCoordinate)other);
 
-        public override int GetHashCode()
-        {
-            return Latitude.GetHashCode() ^ Longitude.GetHashCode();
-        }
+        public override int GetHashCode() => Latitude.GetHashCode() ^ Longitude.GetHashCode();
 
-        private bool Equals(GeoCoordinate other)
-        {
-            return Latitude.Equals(other.Latitude)
+        private bool Equals(GeoCoordinate other) => Latitude.Equals(other.Latitude)
                 && Longitude.Equals(other.Longitude);
-        }
     }
 }

@@ -18,27 +18,15 @@
             LatitudeError = longitudeError;
         }
 
-        public override string ToString()
-        {
-            return $"{Latitude} {Longitude}".Replace(",", ".").Replace(" ", ",");
-        }
+        public override string ToString() => $"{Latitude} {Longitude}".Replace(",", ".").Replace(" ", ",");
 
-        public override bool Equals(object other)
-        {
-            return other is GeoCoordinateWithError && Equals((GeoCoordinateWithError)other);
-        }
+        public override bool Equals(object other) => other is GeoCoordinateWithError && Equals((GeoCoordinateWithError)other);
 
-        public override int GetHashCode()
-        {
-            return Latitude.GetHashCode() ^ Longitude.GetHashCode() ^ LatitudeError.GetHashCode() ^ LongitudeError.GetHashCode();
-        }
+        public override int GetHashCode() => Latitude.GetHashCode() ^ Longitude.GetHashCode() ^ LatitudeError.GetHashCode() ^ LongitudeError.GetHashCode();
 
-        private bool Equals(GeoCoordinateWithError other)
-        {
-            return Latitude.Equals(other.Latitude) 
+        private bool Equals(GeoCoordinateWithError other) => Latitude.Equals(other.Latitude)
                 && Longitude.Equals(other.Longitude)
-                && LatitudeError.Equals(other.LatitudeError) 
+                && LatitudeError.Equals(other.LatitudeError)
                 && LongitudeError.Equals(other.LongitudeError);
-        }
     }
 }

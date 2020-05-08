@@ -3,6 +3,7 @@ using GeoHash.Net.Utilities.Decoders;
 using GeoHash.Net.Utilities.Encoders;
 using GeoHash.Net.Utilities.Enums;
 using GeoHash.Net.Utilities.Matchers;
+using GeoHash.NetCore.Extensions;
 using System;
 using System.Collections.Generic;
 
@@ -19,14 +20,22 @@ namespace TestAppConsole
                 geoCoord: coordinate,
                 precision: GeoHashPrecision.MaximumPrecision
                 );
-            Console.WriteLine($"{coordinate} -> {geoHash}");
+            Console.WriteLine($"GeoHash: {coordinate} -> {geoHash}");
             #endregion
 
             #region GeoHash to Lat/Lon
             var hash = "sxk973ysmhx6";
             var decoder = new GeoHashDecoder<string>();
             var geoCoordinate = decoder.Decode(hash);
-            Console.WriteLine($"{hash} -> {geoCoordinate}");
+            Console.WriteLine($"Coordinate: {hash} -> {geoCoordinate}");
+            Console.WriteLine($"WKT: {hash} -> {geoCoordinate.ToWKTPoint()}");
+            #endregion
+
+            #region GeoHash to Extend
+            hash = "sxk973";
+            var geoExtent = decoder.DecodeToExtent(hash);
+            Console.WriteLine($"Extent: {hash} -> {geoExtent}");
+            Console.WriteLine($"WKT: {hash} -> {geoExtent.ToWKTPolygon()}");
             #endregion
 
             #region Is match  
