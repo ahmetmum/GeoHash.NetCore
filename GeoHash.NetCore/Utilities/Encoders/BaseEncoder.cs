@@ -1,15 +1,18 @@
-﻿using System;
+﻿using GeoHash.NetCore.Enums;
+using System;
 using System.Text;
-using GeoHash.Net.Utilities.Enums;
 
-namespace GeoHash.Net.Utilities.Encoders
+namespace GeoHash.NetCore.Utilities.Encoders
 {
+    /// <summary>
+    /// Encoder Base
+    /// </summary>
     public abstract class BaseEncoder
     {
         private readonly int[] _bits;
         private readonly char[] _base32;
 
-        public BaseEncoder(int[] bits, char[] base32Chars)
+        protected BaseEncoder(int[] bits, char[] base32Chars)
         {
             _bits = bits;
             _base32 = base32Chars;

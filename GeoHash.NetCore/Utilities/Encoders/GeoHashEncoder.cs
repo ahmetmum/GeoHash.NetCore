@@ -1,23 +1,60 @@
-﻿using System.Collections.Generic;
+﻿using GeoHash.NetCore.Enums;
+using GeoHash.NetCore.GeoCoords;
+using GeoHash.NetCore.Helpers;
+using GeoHash.NetCore.Interfaces;
+using System.Collections.Generic;
 using System.Linq;
-using GeoHash.Net.GeoCoords;
-using GeoHash.Net.Utilities.Enums;
-using GeoHash.Net.Utilities.Helpers;
 
-namespace GeoHash.Net.Utilities.Encoders
+namespace GeoHash.NetCore.Utilities.Encoders
 {
+    /// <summary>
+    /// GeoHash Encoder
+    /// </summary>
+    /// <typeparam name="TKey">Key</typeparam>
     public class GeoHashEncoder<TKey> : BaseEncoder, IGeoHashEncoder<TKey>
     {
+        /// <summary>
+        /// Constructor
+        /// </summary>
         public GeoHashEncoder() : this(GeoHashHelpers.GetBits(), GeoHashHelpers.GetBase32Chars()) { }
 
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="bits">Bits</param>
+        /// <param name="base32Chars">Base 32 chars</param>
         public GeoHashEncoder(int[] bits, char[] base32Chars) : base(bits, base32Chars) { }
 
-        public string Encode(GeoCoordinate geoCoord, GeoHashPrecision precision = GeoHashPrecision.MaximumPrecision) => Encode(geoCoord.Latitude, geoCoord.Longitude, precision);
+        /// <summary>
+        /// Encode
+        /// </summary>
+        /// <param name="geoCoordinate">Coordinate</param>
+        /// <param name="precision">Precision</param>
+        /// <returns>string</returns>
+        public string Encode(GeoCoordinate geoCoordinate, GeoHashPrecision precision = GeoHashPrecision.LevelMaximumPrecision) => Encode(geoCoordinate.Latitude, geoCoordinate.Longitude, precision);
 
-        public IEnumerable<KeyValuePair<TKey, string>> Encode(IEnumerable<KeyValuePair<TKey, GeoCoordinate>> geoCoords, GeoHashPrecision precision = GeoHashPrecision.MaximumPrecision) => geoCoords.AsParallel().Select(geoCoord => new KeyValuePair<TKey, string>(geoCoord.Key, Encode(geoCoord.Value, precision)));
+        /// <summary>
+        /// Encode
+        /// </summary>
+        /// <param name="geoCoordinates">Coordinates</param>
+        /// <param name="precision">Precision</param>
+        /// <returns>KeyValuePair[]</returns>
+        public IEnumerable<KeyValuePair<TKey, string>> Encode(IEnumerable<KeyValuePair<TKey, GeoCoordinate>> geoCoordinates, GeoHashPrecision precision = GeoHashPrecision.LevelMaximumPrecision) => geoCoordinates.AsParallel().Select(c => new KeyValuePair<TKey, string>(c.Key, Encode(c.Value, precision)));
 
-        public IDictionary<TKey, string> Encode(IDictionary<TKey, GeoCoordinate> geoCoords, GeoHashPrecision precision = GeoHashPrecision.MaximumPrecision) => Encode(geoCoords.Cast<KeyValuePair<TKey, GeoCoordinate>>(), precision).ToDictionary(x => x.Key, x => x.Value);
+        /// <summary>
+        /// Encode
+        /// </summary>
+        /// <param name="geoCoordinates">Coordinates</param>
+        /// <param name="precision">Precision</param>
+        /// <returns>string[]</returns>
+        public IEnumerable<string> Encode(IEnumerable<GeoCoordinate> geoCoordinates, GeoHashPrecision precision = GeoHashPrecision.LevelMaximumPrecision) => geoCoordinates.AsParallel().Select(c => Encode(c, precision));
 
-        public IEnumerable<string> Encode(IEnumerable<GeoCoordinate> geoCoords, GeoHashPrecision precision = GeoHashPrecision.MaximumPrecision) => geoCoords.AsParallel().Select(geoCoord => Encode(geoCoord, precision));
+        /// <summary>
+        /// Encode
+        /// </summary>
+        /// <param name="geoCoordinates">Coordinates</param>
+        /// <param name="precision">Precision</param>
+        /// <returns>Dictionary[]</returns>
+        public IDictionary<TKey, string> Encode(IDictionary<TKey, GeoCoordinate> geoCoordinates, GeoHashPrecision precision = GeoHashPrecision.LevelMaximumPrecision) => Encode(geoCoordinates.Cast<KeyValuePair<TKey, GeoCoordinate>>(), precision).ToDictionary(x => x.Key, x => x.Value);
     }
 }

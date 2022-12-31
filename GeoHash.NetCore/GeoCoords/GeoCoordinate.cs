@@ -1,11 +1,25 @@
-﻿namespace GeoHash.Net.GeoCoords
+﻿namespace GeoHash.NetCore.GeoCoords
 {
-    public struct GeoCoordinate
+    /// <summary>
+    /// Coordinate
+    /// </summary>
+    public readonly struct GeoCoordinate
     {
+        /// <summary>
+        /// Latitude
+        /// </summary>
         public double Latitude { get; }
 
+        /// <summary>
+        /// Longitude
+        /// </summary>
         public double Longitude { get; }
 
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="latitude">Latitude</param>
+        /// <param name="longitude">Longitude</param>
         public GeoCoordinate(double latitude, double longitude)
         {
             Latitude = latitude;
@@ -14,7 +28,7 @@
 
         public override string ToString() => $"{Latitude} {Longitude}".Replace(",", ".").Replace(" ", ",");
 
-        public override bool Equals(object other) => other is GeoCoordinate && Equals((GeoCoordinate)other);
+        public override bool Equals(object obj) => obj is GeoCoordinate coordinate && Equals(coordinate);
 
         public override int GetHashCode() => Latitude.GetHashCode() ^ Longitude.GetHashCode();
 

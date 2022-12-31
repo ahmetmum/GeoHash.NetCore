@@ -1,24 +1,28 @@
-﻿using System;
+﻿using GeoHash.NetCore.GeoCoords;
+using GeoHash.NetCore.GeoExtents;
+using GeoHash.NetCore.Helpers;
+using System;
 using System.Collections.Generic;
-using GeoHash.Net.GeoCoords;
-using GeoHash.Net.Utilities.Helpers;
 
-namespace GeoHash.Net.Utilities.Decoders
+namespace GeoHash.NetCore.Utilities.Decoders
 {
+    /// <summary>
+    /// Decoder Base
+    /// </summary>
     public abstract class BaseDecoder
     {
         private readonly int[] _bits;
         private readonly IReadOnlyDictionary<char, int> _decodeMap;
 
-        public BaseDecoder() : this(GeoHashHelpers.GetBits(), GeoHashHelpers.GetDecodeMap()) { }
+        protected BaseDecoder() : this(GeoHashHelpers.GetBits(), GeoHashHelpers.GetDecodeMap()) { }
 
-        public BaseDecoder(int[] bits, IReadOnlyDictionary<char, int> decodeMap)
+        protected BaseDecoder(int[] bits, IReadOnlyDictionary<char, int> decodeMap)
         {
             _bits = bits;
             _decodeMap = decodeMap;
         }
 
-        private GeoCoordinateWithError DecodeExactly(string geohash)
+        private GeoCoordinateWithError DecodeExactly(string geoHash)
         {
             double latMin = -90, latMax = 90;
             double lngMin = -180, lngMax = 180;
@@ -26,11 +30,11 @@ namespace GeoHash.Net.Utilities.Decoders
             var latErr = 90.0;
             var lngError = 180.0;
             var isEven = true;
-            var size = geohash.Length;
+            var size = geoHash.Length;
             var bitsSize = _bits.Length;
             for (var i = 0; i < size; i++)
             {
-                var cd = _decodeMap[geohash[i]];
+                var cd = _decodeMap[geoHash[i]];
 
                 for (var j = 0; j < bitsSize; j++)
                 {
@@ -83,7 +87,7 @@ namespace GeoHash.Net.Utilities.Decoders
             return new GeoCoordinate(lat, lng);
         }
 
-        private GeoExtentWithError DecodeExactlyToExtend(string geohash)
+        private GeoExtentWithError DecodeExactlyToExtend(string geoHash)
         {
             double latMin = -90, latMax = 90;
             double lngMin = -180, lngMax = 180;
@@ -91,11 +95,11 @@ namespace GeoHash.Net.Utilities.Decoders
             var latErr = 90.0;
             var lngError = 180.0;
             var isEven = true;
-            var size = geohash.Length;
+            var size = geoHash.Length;
             var bitsSize = _bits.Length;
             for (var i = 0; i < size; i++)
             {
-                var cd = _decodeMap[geohash[i]];
+                var cd = _decodeMap[geoHash[i]];
 
                 for (var j = 0; j < bitsSize; j++)
                 {
@@ -132,7 +136,7 @@ namespace GeoHash.Net.Utilities.Decoders
             return new GeoExtentWithError(latMin, lngMin, latMax, lngMax, latErr, lngError);
         }
 
-        public GeoExtent DecodeToExtent(string geoHash) => new GeoExtent(DecodeExactlyToExtend(geoHash));
+        public GeoExtent DecodeToExtent(string geoHash) => new(DecodeExactlyToExtend(geoHash));
 
         private static double GetPrecision(double x, double precision)
         {
