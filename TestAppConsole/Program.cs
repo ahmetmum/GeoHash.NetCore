@@ -1,25 +1,22 @@
-﻿using GeoHash.Net.GeoCoords;
-using GeoHash.Net.Utilities.Decoders;
-using GeoHash.Net.Utilities.Encoders;
-using GeoHash.Net.Utilities.Enums;
-using GeoHash.Net.Utilities.Matchers;
+﻿using GeoHash.NetCore.Enums;
 using GeoHash.NetCore.Extensions;
+using GeoHash.NetCore.GeoCoords;
+using GeoHash.NetCore.Utilities.Decoders;
+using GeoHash.NetCore.Utilities.Encoders;
+using GeoHash.NetCore.Utilities.Matchers;
 using System;
 using System.Collections.Generic;
 
 namespace TestAppConsole
 {
-    class Program
+    public static class Program
     {
-        static void Main(string[] args)
+        private static void Main()
         {
             #region Lat/Lon to GeoHash
             var coordinate = new GeoCoordinate(41.01177049, 28.97609711);
             var encoder = new GeoHashEncoder<string>();
-            var geoHash = encoder.Encode(
-                geoCoord: coordinate,
-                precision: GeoHashPrecision.MaximumPrecision
-                );
+            var geoHash = encoder.Encode(coordinate, GeoHashPrecision.LevelMaximumPrecision);
             Console.WriteLine($"GeoHash: {coordinate} -> {geoHash}");
             #endregion
 
@@ -28,14 +25,14 @@ namespace TestAppConsole
             var decoder = new GeoHashDecoder<string>();
             var geoCoordinate = decoder.Decode(hash);
             Console.WriteLine($"Coordinate: {hash} -> {geoCoordinate}");
-            Console.WriteLine($"WKT: {hash} -> {geoCoordinate.ToWKTPoint()}");
+            Console.WriteLine($"WKT: {hash} -> {geoCoordinate.ToWktPoint()}");
             #endregion
 
             #region GeoHash to Extend
             hash = "sxk973";
             var geoExtent = decoder.DecodeToExtent(hash);
             Console.WriteLine($"Extent: {hash} -> {geoExtent}");
-            Console.WriteLine($"WKT: {hash} -> {geoExtent.ToWKTPolygon()}");
+            Console.WriteLine($"WKT: {hash} -> {geoExtent.ToWktPolygon()}");
             #endregion
 
             #region Is match  
@@ -54,6 +51,8 @@ namespace TestAppConsole
                 Console.WriteLine($"is matched : {matched}");
             #endregion
 
+            Console.WriteLine();
+            Console.WriteLine("> Press Enter to exit.");
             Console.ReadLine();
         }
     }

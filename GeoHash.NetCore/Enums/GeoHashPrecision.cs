@@ -1,11 +1,14 @@
-﻿namespace GeoHash.Net.Utilities.Enums
+﻿namespace GeoHash.NetCore.Enums
 {
+    /// <summary>
+    /// GeoHash Precision
+    /// </summary>
     public enum GeoHashPrecision
     {
         /// <summary>
         /// ~ 5,004km x 5,004km
         /// </summary>
-        MinimumPrecision = Level1,
+        LevelMinimumPrecision = Level1,
 
         /// <summary>
         /// ~ 5,004km x 5,004km
@@ -70,6 +73,6 @@
         /// <summary>
         /// ~ 3.7cm x 1.8cm
         /// </summary>
-        MaximumPrecision = Level12
+        LevelMaximumPrecision = Level12
     }
 }

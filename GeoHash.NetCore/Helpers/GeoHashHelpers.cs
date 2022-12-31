@@ -1,8 +1,11 @@
 ﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
 
-namespace GeoHash.Net.Utilities.Helpers
+namespace GeoHash.NetCore.Helpers
 {
+    /// <summary>
+    /// GeoHash Helpers
+    /// </summary>
     internal static class GeoHashHelpers
     {
         internal static int[] GetBits()
