@@ -12,16 +12,30 @@ namespace GeoHash.NetCore.Utilities.Decoders
     public abstract class BaseDecoder
     {
         private readonly int[] _bits;
+
         private readonly IReadOnlyDictionary<char, int> _decodeMap;
 
+        /// <summary>
+        /// Constructor
+        /// </summary>
         protected BaseDecoder() : this(GeoHashHelpers.GetBits(), GeoHashHelpers.GetDecodeMap()) { }
 
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="bits">Bits</param>
+        /// <param name="decodeMap">Decode map</param>
         protected BaseDecoder(int[] bits, IReadOnlyDictionary<char, int> decodeMap)
         {
             _bits = bits;
             _decodeMap = decodeMap;
         }
 
+        /// <summary>
+        /// Decode exactly
+        /// </summary>
+        /// <param name="geoHash">GeoExtentWithError</param>
+        /// <returns>GeoCoordinateWithError</returns>
         private GeoCoordinateWithError DecodeExactly(string geoHash)
         {
             double latMin = -90, latMax = 90;
@@ -74,6 +88,11 @@ namespace GeoHash.NetCore.Utilities.Decoders
             return new GeoCoordinateWithError(latitude, longitude, latErr, lngError);
         }
 
+        /// <summary>
+        /// Decode
+        /// </summary>
+        /// <param name="geoHash">GeoHash</param>
+        /// <returns>GeoCoordinate</returns>
         public GeoCoordinate Decode(string geoHash)
         {
             var decodedCoords = DecodeExactly(geoHash);
@@ -87,6 +106,11 @@ namespace GeoHash.NetCore.Utilities.Decoders
             return new GeoCoordinate(lat, lng);
         }
 
+        /// <summary>
+        /// Decode exactly to extend
+        /// </summary>
+        /// <param name="geoHash">GeoHash</param>
+        /// <returns>GeoExtentWithError</returns>
         private GeoExtentWithError DecodeExactlyToExtend(string geoHash)
         {
             double latMin = -90, latMax = 90;
@@ -136,8 +160,19 @@ namespace GeoHash.NetCore.Utilities.Decoders
             return new GeoExtentWithError(latMin, lngMin, latMax, lngMax, latErr, lngError);
         }
 
+        /// <summary>
+        /// Decode to extent
+        /// </summary>
+        /// <param name="geoHash">GeoHash</param>
+        /// <returns>GeoExtent</returns>
         public GeoExtent DecodeToExtent(string geoHash) => new(DecodeExactlyToExtend(geoHash));
 
+        /// <summary>
+        /// Get precision
+        /// </summary>
+        /// <param name="x">X</param>
+        /// <param name="precision">Precision</param>
+        /// <returns>double</returns>
         private static double GetPrecision(double x, double precision)
         {
             var @base = Math.Pow(10, -precision);

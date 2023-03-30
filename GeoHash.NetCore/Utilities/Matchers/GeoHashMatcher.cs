@@ -45,29 +45,31 @@ namespace GeoHash.NetCore.Utilities.Matchers
         /// <summary>
         /// IsMatch
         /// </summary>
-        /// <param name="source">Source</param>
-        /// <param name="comparer">Comparer</param>
+        /// <param name="source">Source (source >= precision)</param>
+        /// <param name="comparer">Comparer (comparer >= precision)</param>
         /// <param name="precision">Precision</param>
-        /// <returns>bool</returns>
-        /// <exception cref="ArgumentOutOfRangeException">ArgumentOutOfRangeException</exception>
+        /// <returns>Boolean</returns>
+        /// <exception cref="ArgumentOutOfRangeException">Argument out of range</exception>
+        /// <exception cref="ArgumentNullException">Argument null</exception>
         public bool IsMatch(string source, string comparer, GeoHashPrecision precision)
         {
             if (source.Length < (int)precision)
-                throw new ArgumentOutOfRangeException($"{nameof(source)} should be greater than or equal to {nameof(precision)}.");
+                throw new ArgumentOutOfRangeException(nameof(source), $"Should be greater than or equal to {nameof(precision)}.");
 
             if (comparer.Length < (int)precision)
-                throw new ArgumentOutOfRangeException($"{nameof(comparer)} should be greater than or equal to {nameof(precision)}.");
+                throw new ArgumentOutOfRangeException(nameof(comparer), $"Should be greater than or equal to {nameof(precision)}.");
 
-            if (string.IsNullOrEmpty(source) || string.IsNullOrEmpty(comparer))
-                throw new ArgumentOutOfRangeException($"{nameof(source)} and {nameof(comparer)} cannot be null.");
+            if (string.IsNullOrEmpty(source))
+                throw new ArgumentNullException(nameof(source));
 
-            if (source.Length < (int)GeoHashPrecision.LevelMinimumPrecision
-                || source.Length > (int)GeoHashPrecision.LevelMaximumPrecision
-                || comparer.Length < (int)GeoHashPrecision.LevelMinimumPrecision
-                || comparer.Length > (int)GeoHashPrecision.LevelMaximumPrecision)
-            {
-                throw new ArgumentOutOfRangeException($"{nameof(source)} and {nameof(comparer)} must have a length between 1 and 12.");
-            }
+            if (string.IsNullOrEmpty(comparer))
+                throw new ArgumentNullException(nameof(comparer));
+
+            if (source.Length < (int)GeoHashPrecision.LevelMinimumPrecision || source.Length > (int)GeoHashPrecision.LevelMaximumPrecision)
+                throw new ArgumentOutOfRangeException(nameof(source), "Must have a length between 1 and 12.");
+
+            if (comparer.Length < (int)GeoHashPrecision.LevelMinimumPrecision || comparer.Length > (int)GeoHashPrecision.LevelMaximumPrecision)
+                throw new ArgumentOutOfRangeException(nameof(comparer), "Must have a length between 1 and 12.");
 
 
             /* 
@@ -86,12 +88,12 @@ namespace GeoHash.NetCore.Utilities.Matchers
         /// <param name="source">Source</param>
         /// <param name="comparers">Comparer list</param>
         /// <param name="precision">Precision</param>
-        /// <returns></returns>
-        /// <exception cref="ArgumentNullException">ArgumentNullException</exception>
+        /// <returns>string[]</returns>
+        /// <exception cref="ArgumentNullException">Argument null</exception>
         public IEnumerable<string> GetMatches(string source, IEnumerable<string> comparers, GeoHashPrecision precision)
         {
             if (comparers == null)
-                throw new ArgumentNullException($"{nameof(comparers)} cannot be null.");
+                throw new ArgumentNullException(nameof(comparers));
 
             source = source[..(int)precision];
             return comparers.AsParallel().Where(x => IsMatch(source, x, precision));
@@ -104,11 +106,11 @@ namespace GeoHash.NetCore.Utilities.Matchers
         /// <param name="comparers">Comparer list</param>
         /// <param name="precision">Precision</param>
         /// <returns>KeyValuePair[]</returns>
-        /// <exception cref="ArgumentNullException">ArgumentNullException</exception>
+        /// <exception cref="ArgumentNullException">Argument null</exception>
         public IEnumerable<KeyValuePair<TKey, string>> GetMatches(string source, IEnumerable<KeyValuePair<TKey, string>> comparers, GeoHashPrecision precision)
         {
             if (comparers == null)
-                throw new ArgumentNullException($"{nameof(comparers)} cannot be null.");
+                throw new ArgumentNullException(nameof(comparers));
 
             source = source[..(int)precision];
             return comparers.AsParallel().Where(x => IsMatch(source, x.Value, precision));
