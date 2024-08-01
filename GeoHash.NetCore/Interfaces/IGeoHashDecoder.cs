@@ -36,7 +36,7 @@ namespace GeoHash.NetCore.Interfaces
         /// Decode
         /// </summary>
         /// <param name="geoHashes"></param>
-        /// <returns></returns>
+        /// <returns>GeoCoordinate</returns>
         IEnumerable<GeoCoordinate> Decode(IEnumerable<string> geoHashes);
 
         /// <summary>

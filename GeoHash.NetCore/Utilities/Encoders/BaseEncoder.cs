@@ -18,13 +18,21 @@ namespace GeoHash.NetCore.Utilities.Encoders
             _base32 = base32Chars;
         }
 
+        /// <summary>
+        /// Encode
+        /// </summary>
+        /// <param name="latitude">Latitude (min: -90, max: 90)</param>
+        /// <param name="longitude">Longitude (min: -180, max: 180)</param>
+        /// <param name="precision">Precision (default Level12:~ 3.7cm x 1.8cm)</param>
+        /// <returns>string</returns>
+        /// <exception cref="ArgumentOutOfRangeException">Argument out of range</exception>
         public string Encode(double latitude, double longitude, GeoHashPrecision precision = GeoHashPrecision.Level12)
         {
             if (latitude < -90 || latitude > 90)
-                throw new ArgumentOutOfRangeException($"{nameof(latitude)} must be between -90 and 90.");
+                throw new ArgumentOutOfRangeException(nameof(latitude), "Must be between -90 and 90.");
 
             if (longitude < -180 || longitude > 180)
-                throw new ArgumentOutOfRangeException($"{nameof(longitude)} must be between -180 and 180.");
+                throw new ArgumentOutOfRangeException(nameof(longitude), "Must be between -180 and 180.");
 
             double latMin = -90, latMax = 90;
             double lngMin = -180, lngMax = 180;
