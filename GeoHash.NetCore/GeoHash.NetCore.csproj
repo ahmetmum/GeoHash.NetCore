@@ -1,7 +1,7 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>net5;net6;net7.0;net8.0</TargetFrameworks>
+    <TargetFrameworks>net6;net7.0;net8.0;net9.0</TargetFrameworks>
     <Company>Ahmet MUM</Company>
     <Authors>Ahmet MUM</Authors>
     <Product>GeoHash for .Net Core</Product>
@@ -13,7 +13,7 @@
     <RepositoryUrl>https://github.com/ahmetmum/GeoHash.NetCore</RepositoryUrl>
     <RepositoryType>GitHub</RepositoryType>
     <PackageTags>geohash geohash-library .netcore c# .net</PackageTags>
-    <Version>1.3.0</Version>
+    <Version>1.4.0</Version>
     <GenerateDocumentationFile>True</GenerateDocumentationFile>
   </PropertyGroup>
 

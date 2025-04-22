@@ -1,24 +1,23 @@
-﻿namespace GeoHash.NetCore.Interfaces
+﻿namespace GeoHash.NetCore.Interfaces;
+
+/// <summary>
+/// GeoHash Utility Interface
+/// </summary>
+/// <typeparam name="TKey">Key</typeparam>
+public interface IGeoHashUtility<TKey>
 {
     /// <summary>
-    /// GeoHash Utility Interface
+    /// Encoder
     /// </summary>
-    /// <typeparam name="TKey">Key</typeparam>
-    public interface IGeoHashUtility<TKey>
-    {
-        /// <summary>
-        /// Encoder
-        /// </summary>
-        IGeoHashEncoder<TKey> Encoder { get; }
+    IGeoHashEncoder<TKey> Encoder { get; }
 
-        /// <summary>
-        /// Decoder
-        /// </summary>
-        IGeoHashDecoder<TKey> Decoder { get; }
+    /// <summary>
+    /// Decoder
+    /// </summary>
+    IGeoHashDecoder<TKey> Decoder { get; }
 
-        /// <summary>
-        /// Matcher
-        /// </summary>
-        IGeoHashMatcher<TKey> Matcher { get; }
-    }
+    /// <summary>
+    /// Matcher
+    /// </summary>
+    IGeoHashMatcher<TKey> Matcher { get; }
 }
